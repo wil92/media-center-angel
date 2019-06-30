@@ -5,5 +5,5 @@ const routes = [
 ];
 
 module.exports.loadRoutes = (app) => {
-    routes.forEach((router) => app.use(router));
+    routes.forEach((router) => app.use(router.path || '', router.router));
 };
