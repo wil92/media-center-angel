@@ -1,7 +1,14 @@
 extends layout
 
+block styles
+  link(rel='stylesheet', href='/styles/styles.css')
+  link(rel='stylesheet', href='/styles/groups-list.css')
+
 block content
-  h1= title
-  each directory in directories
-    li
-      a(href=directory.url)=directory.name
+  div(class='page')
+    h1=title
+    each directory, index in directories
+      a(class='group-card', href=directory.url, alt='block', id=`link-${index}`)=directory.name
+
+  script.
+    document.getElementById('link-0').focus();

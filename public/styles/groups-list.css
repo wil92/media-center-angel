@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+}
+
+.page {
+    min-width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.group-card {
+    min-width: 200px;
+    height: 200px;
+    margin: 20px;
+    background-color: #003252;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+.group-card:focus {
+    border: 2px solid white;
+}
