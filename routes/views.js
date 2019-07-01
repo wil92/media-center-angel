@@ -32,7 +32,8 @@ router.get('/video/:dir_id/', (req, res) => {
 
     res.render('media', {
         videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir,
-        subtitles
+        subtitles,
+        title: path.basename(subdir)
     });
 });
 

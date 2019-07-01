@@ -24,6 +24,6 @@
     word-wrap: break-word;
 }
 
-.group-card:focus {
+.file-card:focus {
     border: 2px solid white;
 }

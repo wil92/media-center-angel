@@ -1,7 +1,12 @@
 extends layout
 
+block styles
+  link(rel='stylesheet', href='/styles/styles.css')
+  link(rel='stylesheet', href='/styles/media.css')
+
 block content
-  h1= title
-  video(controls src=videoUrl)
-    each subtitle in subtitles
-      track(src=subtitle.url label=subtitle.label)
+  div(class='page')
+    h1= title
+    video(controls src=videoUrl)
+      each subtitle in subtitles
+        track(src=subtitle.url label=subtitle.label)
