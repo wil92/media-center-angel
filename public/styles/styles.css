@@ -1,3 +1,6 @@
 body {
     background-color: #08457b;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }

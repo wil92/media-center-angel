@@ -1,17 +1,16 @@
-body {
-    margin: 0;
-}
-
 .page {
     min-width: 100vw;
     min-height: 100vh;
 
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    overflow-x: hidden;
 }
 
 .group-card {
     min-width: 200px;
+    max-width: 200px;
     height: 200px;
     margin: 20px;
     background-color: #003252;
