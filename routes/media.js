@@ -6,10 +6,18 @@ const mime = require('mime-types');
 
 const router = express.Router();
 
-router.get('/media/:video_id', (req, res) => {
-    const mediaTest = process.env['MEDIA_TEST_PATH'];
-    const mediaType = mime.lookup(mediaTest);
-    const stat = fs.statSync(mediaTest);
+router.get('/media/:dir_id/', (req, res) => {
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
+    mediasDirectories = mediasDirectories || [];
+    if (typeof mediasDirectories === 'string') {
+        mediasDirectories = [mediasDirectories];
+    }
+    const group = mediasDirectories[req.params['dir_id']];
+    const subdir = req.query['subdir'] || '';
+
+    const mediaPath = path.join(group, subdir);
+    const mediaType = mime.lookup(mediaPath);
+    const stat = fs.statSync(mediaPath);
     const fileSize = stat.size;
     const range = req.headers.range;
     if (range) {
@@ -17,7 +25,7 @@ router.get('/media/:video_id', (req, res) => {
         const start = parseInt(parts[0], 10);
         const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
         const chunksize = (end - start) + 1;
-        const file = fs.createReadStream(mediaTest, {start, end});
+        const file = fs.createReadStream(mediaPath, {start, end});
         const head = {
             'Content-Range': `bytes ${start}-${end}/${fileSize}`,
             'Accept-Ranges': 'bytes',
@@ -32,7 +40,7 @@ router.get('/media/:video_id', (req, res) => {
             'Content-Type': mediaType,
         };
         res.writeHead(200, head);
-        fs.createReadStream(mediaTest).pipe(res);
+        fs.createReadStream(mediaPath).pipe(res);
     }
 });
 

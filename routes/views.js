@@ -16,6 +16,19 @@ router.get('/', (req, res) => {
     res.render('groups-list', {directories})
 });
 
+router.get('/video/:dir_id/', (req, res) => {
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
+    mediasDirectories = mediasDirectories || [];
+    if (typeof mediasDirectories === 'string') {
+        mediasDirectories = [mediasDirectories];
+    }
+    const group = mediasDirectories[req.params['dir_id']];
+    const subdir = req.query['subdir'] || '';
+    res.render('media', {
+        videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir
+    });
+});
+
 router.get('/:dir_id/', (req, res) => {
     let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
     mediasDirectories = mediasDirectories || [];
@@ -39,16 +52,14 @@ router.get('/:dir_id/', (req, res) => {
     }, []);
     const files = dirs.reduce((array, filePath) => {
         if (fs.statSync(filePath).isFile() && mime.lookup(filePath).includes("video")) {
-            array.push({url: filePath, name: path.basename(filePath)});
+            array.push({
+                url: '/media/video/' + req.params['dir_id']+ '?subdir=' + path.join(subdir, path.basename(filePath)),
+                name: path.basename(filePath)
+            });
         }
         return array;
     }, []);
     res.render('files-list', {directories, files});
-});
-
-router.get('/video/:dir_id/', (req, res) => {
-    const videoId = req.params['video_id'];
-    res.render('index', {title: videoId});
 });
 
 module.exports.router = router;
