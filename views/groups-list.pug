@@ -6,7 +6,6 @@ block styles
 
 block content
   div(class='page')
-    h1=title
     each directory, index in directories
       a(class='group-card', href=directory.url, alt='block', id=`link-${index}`)=directory.name
 

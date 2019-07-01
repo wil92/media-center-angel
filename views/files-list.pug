@@ -6,8 +6,10 @@ block styles
 
 block content
   div(class='page')
-    h1= title
-    each directory in directories
-      a(class='file-card', href=directory.url)=directory.name
-    each file in files
-      a(class='file-card', href=file.url)=file.name
+    each directory, index in directories
+      a(class='file-card', href=directory.url, id=`link-${index}`)=directory.name
+    each file, index in files
+      a(class='file-card', href=file.url, id=`link-${index + directories.length}`)=file.name
+
+  script.
+    document.getElementById('link-0').focus();

@@ -6,6 +6,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     overflow-x: hidden;
+    align-content: center;
 }
 
 .group-card {
