@@ -1,0 +1,26 @@
+.page {
+    min-width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.file-card {
+    min-width: 150px;
+    max-width: 150px;
+    height: 200px;
+    margin: 20px;
+    background-color: #003252;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+.group-card:focus {
+    border: 2px solid white;
+}
