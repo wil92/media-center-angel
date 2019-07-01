@@ -7,21 +7,14 @@ const mime = require('mime-types');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
-    mediasDirectories = mediasDirectories || [];
-    if (typeof mediasDirectories === 'string') {
-        mediasDirectories = [mediasDirectories];
-    }
-    const directories = mediasDirectories.map((dir, index) => ({url: '/media/' + index, name: dir})) ;
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
+    const directories = mediasDirectories.map((dir, index) => ({url: '/media/' + index, name: path.basename(dir)})) ;
     res.render('groups-list', {directories})
 });
 
 router.get('/video/:dir_id/', (req, res) => {
-    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
-    mediasDirectories = mediasDirectories || [];
-    if (typeof mediasDirectories === 'string') {
-        mediasDirectories = [mediasDirectories];
-    }
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
+    console.log('me', mediasDirectories);
     const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
     res.render('media', {
@@ -30,11 +23,7 @@ router.get('/video/:dir_id/', (req, res) => {
 });
 
 router.get('/:dir_id/', (req, res) => {
-    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
-    mediasDirectories = mediasDirectories || [];
-    if (typeof mediasDirectories === 'string') {
-        mediasDirectories = [mediasDirectories];
-    }
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
     const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
 

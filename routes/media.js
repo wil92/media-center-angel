@@ -7,11 +7,7 @@ const mime = require('mime-types');
 const router = express.Router();
 
 router.get('/media/:dir_id/', (req, res) => {
-    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'];
-    mediasDirectories = mediasDirectories || [];
-    if (typeof mediasDirectories === 'string') {
-        mediasDirectories = [mediasDirectories];
-    }
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
     const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
 
