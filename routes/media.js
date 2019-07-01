@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const mime = require('mime-types');
+const srt2vtt = require('srt-to-vtt');
 
 const router = express.Router();
 
@@ -11,7 +12,10 @@ router.get('/subtitle/:dir_id', (req, res) => {
     const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
 
-
+    const subtitlePath = path.join(group, subdir);
+    fs.createReadStream(subtitlePath)
+        .pipe(srt2vtt())
+        .pipe(res);
 });
 
 router.get('/media/:dir_id/', (req, res) => {
