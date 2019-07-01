@@ -1,5 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const express = require('express');
+
+const mime = require('mime-types');
 
 const router = express.Router();
 
@@ -19,23 +22,31 @@ router.get('/:dir_id/', (req, res) => {
     if (typeof mediasDirectories === 'string') {
         mediasDirectories = [mediasDirectories];
     }
-    const directories = mediasDirectories.reduce((array, path) => {
-        if (fs.statSync(path).isDirectory()) {
-            array.push(path);
+    const group = mediasDirectories[req.params['dir_id']];
+    const subdir = req.query['subdir'] || '';
+
+    const finalGroup = path.join(group, subdir);
+    const dirs = fs.readdirSync(finalGroup).map((dirName) => path.join(finalGroup, dirName));
+
+    const directories = dirs.reduce((array, filePath) => {
+        if (fs.statSync(filePath).isDirectory()) {
+            array.push({
+                url: '/media/' + req.params['dir_id'] + '/?subdir=' + path.join(subdir , path.basename(filePath)),
+                name: path.basename(filePath)
+            });
         }
         return array;
     }, []);
-
-    // const directories = mediasDirectories.reduce((array, path) => {
-    //     if (fs.statSync(path).isDirectory()) {
-    //         array.push(path);
-    //     }
-    //     return array;
-    // }, []);
-    res.render('index', {title: 'medias'});
+    const files = dirs.reduce((array, filePath) => {
+        if (fs.statSync(filePath).isFile() && mime.lookup(filePath).includes("video")) {
+            array.push({url: filePath, name: path.basename(filePath)});
+        }
+        return array;
+    }, []);
+    res.render('files-list', {directories, files});
 });
 
-router.get('/video/:video_id', (req, res) => {
+router.get('/video/:dir_id/', (req, res) => {
     const videoId = req.params['video_id'];
     res.render('index', {title: videoId});
 });

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  each directory in directories
+    li
+      a(href=directory.url)=directory.name
+  each file in files
+    li
+      a(href=file.url)=file.name
