@@ -22,7 +22,10 @@ router.get('/video/:dir_id/', (req, res) => {
     const subtitles = dirs.reduce((array, filePath) => {
         const mimeType = mime.lookup(filePath);
         if(fs.statSync(filePath).isFile() && mimeType === "application/x-subrip") {
-            array.push('/api/subtitle/' + req.params['dir_id'] + "/?subdir=" + path.join(path.dirname(subdir), path.basename(filePath)));
+            array.push({
+                url: '/api/subtitle/' + req.params['dir_id'] + "/?subdir=" + path.join(path.dirname(subdir), path.basename(filePath)),
+                label: path.basename(filePath)
+            });
         }
         return array;
     }, []);
