@@ -13,9 +13,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/video/:dir_id/', (req, res) => {
-    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
-    console.log('me', mediasDirectories);
-    const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
     res.render('media', {
         videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir
@@ -40,7 +37,8 @@ router.get('/:dir_id/', (req, res) => {
         return array;
     }, []);
     const files = dirs.reduce((array, filePath) => {
-        if (fs.statSync(filePath).isFile() && mime.lookup(filePath).includes("video")) {
+        const mimeType = mime.lookup(filePath);
+        if (fs.statSync(filePath).isFile() && mimeType && mimeType.includes("video")) {
             array.push({
                 url: '/media/video/' + req.params['dir_id']+ '?subdir=' + path.join(subdir, path.basename(filePath)),
                 name: path.basename(filePath)
