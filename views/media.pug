@@ -3,3 +3,5 @@ extends layout
 block content
   h1= title
   video(controls src=videoUrl)
+    each subtitle in subtitles
+      track(src=subtitle)

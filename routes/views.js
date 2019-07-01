@@ -13,9 +13,23 @@ router.get('/', (req, res) => {
 });
 
 router.get('/video/:dir_id/', (req, res) => {
+    let mediasDirectories = process.env['MEDIAS_DIRECTORIES'].split(':');
+    const group = mediasDirectories[req.params['dir_id']];
     const subdir = req.query['subdir'] || '';
+
+    const finalGroup = path.dirname(path.join(group, subdir));
+    const dirs = fs.readdirSync(finalGroup).map((dirName) => path.join(finalGroup, dirName));
+    const subtitles = dirs.reduce((array, filePath) => {
+        const mimeType = mime.lookup(filePath);
+        if(fs.statSync(filePath).isFile() && mimeType === "application/x-subrip") {
+            array.push('/api/subtitles/' + req.params['dir_id'] + "/?subdir=" + path.join(path.dirname(subdir), path.basename(filePath)));
+        }
+        return array;
+    }, []);
+
     res.render('media', {
-        videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir
+        videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir,
+        subtitles
     });
 });
 
