@@ -3,11 +3,13 @@ extends layout
 block styles
   link(rel='stylesheet', href='/styles/styles.css')
   link(rel='stylesheet', href='/styles/groups-list.css')
+  link(rel='stylesheet', href='/styles/icons.css')
 
 block content
   div(class='page')
     each directory, index in directories
       a(class='group-card', href=directory.url, alt='block', id=`link-${index}`)=directory.name
+        div(class='folder')
 
   script.
     document.getElementById('link-0').focus();

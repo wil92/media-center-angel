@@ -3,13 +3,16 @@ extends layout
 block styles
   link(rel='stylesheet', href='/styles/styles.css')
   link(rel='stylesheet', href='/styles/files-list.css')
+  link(rel='stylesheet', href='/styles/icons.css')
 
 block content
   div(class='page')
     each directory, index in directories
       a(class='file-card', href=directory.url, id=`link-${index}`)=directory.name
+        div(class='folder')
     each file, index in files
       a(class='file-card', href=file.url, id=`link-${index + directories.length}`)=file.name
+        div(class='play')
 
   script.
     document.getElementById('link-0').focus();

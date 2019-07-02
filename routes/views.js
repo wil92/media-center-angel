@@ -44,24 +44,29 @@ router.get('/:dir_id/', (req, res) => {
 
     const finalGroup = path.join(group, subdir);
     const dirs = fs.readdirSync(finalGroup).map((dirName) => path.join(finalGroup, dirName));
+    console.log('aa', dirs);
 
     const directories = dirs.reduce((array, filePath) => {
-        if (fs.statSync(filePath).isDirectory()) {
-            array.push({
-                url: '/media/' + req.params['dir_id'] + '/?subdir=' + path.join(subdir , path.basename(filePath)),
-                name: path.basename(filePath)
-            });
-        }
+        try {
+            if (fs.statSync(filePath).isDirectory()) {
+                array.push({
+                    url: '/media/' + req.params['dir_id'] + '/?subdir=' + path.join(subdir, path.basename(filePath)),
+                    name: path.basename(filePath)
+                });
+            }
+        } catch (ignore) {}
         return array;
     }, []);
     const files = dirs.reduce((array, filePath) => {
-        const mimeType = mime.lookup(filePath);
-        if (fs.statSync(filePath).isFile() && mimeType && mimeType.includes("video")) {
-            array.push({
-                url: '/media/video/' + req.params['dir_id']+ '?subdir=' + path.join(subdir, path.basename(filePath)),
-                name: path.basename(filePath)
-            });
-        }
+        try {
+            const mimeType = mime.lookup(filePath);
+            if (fs.statSync(filePath).isFile() && mimeType && mimeType.includes("video")) {
+                array.push({
+                    url: '/media/video/' + req.params['dir_id'] + '?subdir=' + path.join(subdir, path.basename(filePath)),
+                    name: path.basename(filePath)
+                });
+            }
+        } catch (ignore) {}
         return array;
     }, []);
     res.render('files-list', {directories, files});
