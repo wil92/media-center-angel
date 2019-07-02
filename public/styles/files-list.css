@@ -10,8 +10,8 @@
 }
 
 .file-card {
-    min-width: 150px;
-    max-width: 150px;
+    min-width: 15%;
+    max-width: 15%;
     height: 200px;
     margin: 20px;
     background-color: #003252;
@@ -26,4 +26,21 @@
 
 .file-card:focus {
     border: 2px solid white;
+}
+
+@media only screen and (max-device-width: 824px) {
+    .file-card {
+        min-width: 45%;
+        max-width: 45%;
+        height: 400px;
+        font-size: 30px;
+    }
+}
+
+@media only screen and (min-device-width: 2000px) {
+    .file-card {
+        min-width: 30%;
+        max-width: 30%;
+        font-size: 30px;
+    }
 }

@@ -7,3 +7,9 @@
     align-content: center;
     justify-content: center;
 }
+
+@media only screen and (max-device-width: 824px) {
+    .page {
+        font-size: 30px;
+    }
+}

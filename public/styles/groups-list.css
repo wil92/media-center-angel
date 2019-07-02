@@ -27,3 +27,20 @@
 .group-card:focus {
     border: 2px solid white;
 }
+
+@media only screen and (max-device-width: 824px) {
+    .group-card {
+        min-width: 45%;
+        max-width: 45%;
+        height: 400px;
+        font-size: 30px;
+    }
+}
+
+@media only screen and (min-device-width: 2000px) {
+    .group-card {
+        min-width: 30%;
+        max-width: 30%;
+        font-size: 30px;
+    }
+}
