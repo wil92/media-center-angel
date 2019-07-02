@@ -44,7 +44,6 @@ router.get('/:dir_id/', (req, res) => {
 
     const finalGroup = path.join(group, subdir);
     const dirs = fs.readdirSync(finalGroup).map((dirName) => path.join(finalGroup, dirName));
-    console.log('aa', dirs);
 
     const directories = dirs.reduce((array, filePath) => {
         try {
