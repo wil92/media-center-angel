@@ -1,6 +1,6 @@
 .page {
-    min-width: 100vw;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
 
     display: flex;
     flex-direction: column;
@@ -8,8 +8,34 @@
     justify-content: center;
 }
 
+.page h1 {
+    height: 4vh;
+    text-align: center;
+    z-index: 10;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+.page video {
+    width: auto;
+    height: 90vh;
+}
+
+.page video:focus{
+    outline: none;
+}
+
 @media only screen and (max-device-width: 824px) {
     .page {
         font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .page video{
+        margin: auto;
+        height: auto;
+        width: 100%;
     }
 }
