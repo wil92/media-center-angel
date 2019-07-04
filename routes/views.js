@@ -29,9 +29,17 @@ router.get('/video/:dir_id/', (req, res) => {
         }
         return array;
     }, []);
+    
+    const fileUrl = '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir;
+    const mimeType = mime.lookup(fileUrl);
+    if(mimeType.includes("video"))
+        mediaType = 'video';
+    else if(mimeType.includes("audio"))
+        mediaType = 'audio';
 
     res.render('media', {
-        videoUrl: '/api/media/' + req.params['dir_id'] + '/?subdir=' + subdir,
+        Url: fileUrl,
+        type: mediaType,
         subtitles,
         title: path.basename(subdir)
     });
@@ -59,7 +67,7 @@ router.get('/:dir_id/', (req, res) => {
     const files = dirs.reduce((array, filePath) => {
         try {
             const mimeType = mime.lookup(filePath);
-            if (fs.statSync(filePath).isFile() && mimeType && mimeType.includes("video")) {
+            if (fs.statSync(filePath).isFile() && mimeType && (mimeType.includes("video") || mimeType.includes("audio"))) {
                 array.push({
                     url: '/media/video/' + req.params['dir_id'] + '?subdir=' + path.join(subdir, path.basename(filePath)),
                     name: path.basename(filePath)

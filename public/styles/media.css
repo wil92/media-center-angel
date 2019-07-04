@@ -21,8 +21,12 @@
     height: 90vh;
 }
 
-.page video:focus{
+.page video:focus, .page audio:focus{
     outline: none;
+}
+
+.page audio {
+    width: 100%;
 }
 
 @media only screen and (max-device-width: 824px) {
