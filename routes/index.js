@@ -1,9 +1,11 @@
 const media = require('./media');
 const views = require('./views');
+const api = require('./api');
 
 const routes = [
     media,
-    views
+    views,
+    api
 ];
 
 module.exports.loadRoutes = (app) => {
