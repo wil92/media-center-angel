@@ -64,6 +64,12 @@ router.get('/:dir_id/', (req, res) => {
         } catch (ignore) {}
         return array;
     }, []);
+    let url = ('/media/' + req.params['dir_id'] + '/?subdir=' + subdir).split('/');
+    url.pop();
+    directories.push({
+        url: url.join('/'),
+        name: '...'
+    });
     const files = dirs.reduce((array, filePath) => {
         try {
             const mimeType = mime.lookup(filePath);
@@ -76,7 +82,10 @@ router.get('/:dir_id/', (req, res) => {
         } catch (ignore) {}
         return array;
     }, []);
-    res.render('files-list', {directories, files});
+    res.render('files-list', {
+        directories, 
+        files
+    });
 });
 
 module.exports.router = router;
