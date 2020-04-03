@@ -2,9 +2,10 @@
   "name": "media-center-angel",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "start": "node ./bin/www",
+    "start:app": "electron .",
     "start:dev": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +19,7 @@
     "srt-to-vtt": "^1.1.3"
   },
   "devDependencies": {
+    "electron": "^8.2.0",
     "nodemon": "^1.19.1"
   }
 }
