@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Media Center Angel</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+    <style>
+        body {
+            color: #fff;
+            background-color: #3e4245ff
+        }
+
+        input {
+            margin: 15px;
+            border-radius: 3px;
+            border: none;
+            background-color: #252728ff;
+            color: #fff;
+            font-size: 1.5rem;
+            padding: 5px;
+            min-width: 100px;
+            flex: 100%;
+        }
+
+        .start-button {
+            background-color: #ce275fff;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            width: 50%;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .label {
+            margin: 15px 15px 0 15px;
+            font-size: 1.4rem;
+        }
+
+        .pus-button {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ce275fff;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .minus-button {
+            color: #5a44cbff;
+            visibility: hidden;
+        }
+
+        #path-element {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .path-container > :last-child > .minus-button {
+            visibility: visible;
+        }
+
+        .path-container > :nth-child(2) > .minus-button {
+            visibility: hidden !important;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; flex-direction: column;">
+    <span class="label">Port</span>
+    <input type="text" id="port" value="3000"/>
+    <div id="path-container" class="path-container">
+        <span class="label">Paths</span>
+        <div id="path-element" name="path-element">
+            <input type="text" name="path"/>
+            <span class="pus-button" onclick="newPath()">+</span>
+            <span class="pus-button minus-button" onclick="delPath()">-</span>
+        </div>
+    </div>
+    <button onclick="startServer()" class="start-button">
+        start server
+    </button>
+</div>
+<script>
+    function newPath() {
+        var pathElement = document.getElementById('path-element');
+        var pathContainer = document.getElementById('path-container');
+
+        var pathElementClone = pathElement.cloneNode(true);
+        pathElementClone.children[0].value = '';
+
+        pathContainer.appendChild(pathElementClone);
+    }
+
+    function delPath() {
+        var paths = document.getElementsByName('path-element');
+
+        if (paths.length > 1) {
+            var element = paths[paths.length - 1];
+            element.parentNode.removeChild(element);
+        }
+    }
+
+    function startServer() {
+        var port = document.getElementById('port');
+        var paths = document.getElementsByName('path');
+
+        var pathsValues = [];
+        for (var i = 0; i < paths.length; i++) {
+            pathsValues.push(paths[i].value);
+        }
+
+        window.postMessage({type: 'start-server', port: parseInt(port.value), paths: pathsValues});
+    }
+</script>
+</body>
+</html>
