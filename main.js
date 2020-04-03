@@ -59,3 +59,10 @@ ipcMain.on('start-server', async (event, data) => {
         console.log('server start in port:', data.port);
     });
 });
+
+ipcMain.on('stop-server', async () => {
+    if (server) {
+        server.close();
+        console.log('server stopped');
+    }
+});

@@ -8,8 +8,6 @@ process.once('loaded', () => {
     global.clearImmediate = _clearImmediate;
 
     window.addEventListener('message', evt => {
-        if (evt.data.type === 'start-server') {
-            ipcRenderer.send('start-server', evt.data);
-        }
+        ipcRenderer.send(evt.data.type, evt.data);
     })
 });

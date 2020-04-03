@@ -80,11 +80,13 @@
             <span class="pus-button minus-button" onclick="delPath()">-</span>
         </div>
     </div>
-    <button onclick="startServer()" class="start-button">
+    <button onclick="startServer()" class="start-button" id="start-button">
         start server
     </button>
 </div>
 <script>
+    var serverRunning = false;
+
     function newPath() {
         var pathElement = document.getElementById('path-element');
         var pathContainer = document.getElementById('path-container');
@@ -105,15 +107,24 @@
     }
 
     function startServer() {
-        var port = document.getElementById('port');
-        var paths = document.getElementsByName('path');
+        var startButton = document.getElementById('start-button');
+        if (serverRunning) {
+            window.postMessage({type: 'stop-server'});
+            serverRunning = false;
+            startButton.innerText = 'start server';
+        } else {
+            serverRunning = true;
+            var port = document.getElementById('port');
+            var paths = document.getElementsByName('path');
 
-        var pathsValues = [];
-        for (var i = 0; i < paths.length; i++) {
-            pathsValues.push(paths[i].value);
+            var pathsValues = [];
+            for (var i = 0; i < paths.length; i++) {
+                pathsValues.push(paths[i].value);
+            }
+
+            window.postMessage({type: 'start-server', port: parseInt(port.value), paths: pathsValues});
+            startButton.innerText = 'stop server';
         }
-
-        window.postMessage({type: 'start-server', port: parseInt(port.value), paths: pathsValues});
     }
 </script>
 </body>
