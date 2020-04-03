@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "start:app": "electron .",
+    "start": "electron .",
+    "start:server": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
