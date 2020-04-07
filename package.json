@@ -1,15 +1,21 @@
 {
   "name": "media-center-angel",
   "version": "1.0.0",
-  "description": "",
+  "description": "Stream your videos and music at home",
   "main": "main.js",
   "scripts": {
+    "dist": "npm run dist:linux && npm run dist:win",
+    "dist:linux": "electron-builder --linux",
+    "dist:win": "electron-builder --win",
     "start": "electron .",
     "start:server": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "wil92",
+  "author": {
+    "name": "wil92",
+    "email": "ggjnez92@gmail.com"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "debug": "^4.1.1",
@@ -22,5 +28,19 @@
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
     "nodemon": "^1.19.1"
+  },
+  "build": {
+    "appId": "media-center-angel",
+    "linux": {
+      "category": "Network",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
   }
 }
