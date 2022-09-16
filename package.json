@@ -27,7 +27,7 @@
   "devDependencies": {
     "electron": "^15.5.5",
     "electron-builder": "^22.4.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^2.0.19"
   },
   "build": {
     "appId": "media-center-angel",
