@@ -19,7 +19,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "debug": "^4.1.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mime-types": "^2.1.24",
     "pug": "^2.0.4",
     "srt-to-vtt": "^1.1.3"
