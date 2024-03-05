@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "electron": "^25.8.4",
-    "electron-builder": "^24.4.0",
+    "electron-builder": "^24.13.3",
     "nodemon": "^2.0.19"
   },
   "build": {
